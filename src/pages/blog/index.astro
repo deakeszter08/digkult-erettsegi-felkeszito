@@ -9,7 +9,7 @@ import '../../styles/blog.css';
 
 const posts = await getCollection('blog');
 
-const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const allTags = Array.from(
   new Set(posts.flatMap((post) => post.data.tags ?? []))
@@ -17,13 +17,13 @@ const allTags = Array.from(
 
 // Sorszámozott haladási ív: ha van href, kattintható; ha null, még készülő lépés
 const roadmapSteps = [
-  { step: 1, title: 'Változók és adattípusok', href: `${BASE}blog/valtozok_adattipusok/`, note: null },
-  { step: 2, title: 'Adatbekérés (input)', href: `${BASE}blog/adatbekeres_input/`, note: null },
-  { step: 3, title: 'Elágazások (if / elif / else)', href: `${BASE}blog/elagazasok_if_elif_else/`, note: null },
-  { step: 4, title: 'Listák alapjai', href: `${BASE}blog/listak_listamuveletek/`, note: null },
-  { step: 5, title: 'For ciklus', href: `${BASE}blog/for-ciklus-python/`, note: null },
+  { step: 1, title: 'Változók és adattípusok', href: `${base}/blog/valtozok_adattipusok/`, note: null },
+  { step: 2, title: 'Adatbekérés (input)', href: `${base}/blog/adatbekeres_input/`, note: null },
+  { step: 3, title: 'Elágazások (if / elif / else)', href: `${base}/blog/elagazasok_if_elif_else/`, note: null },
+  { step: 4, title: 'Listák alapjai', href: `${base}/blog/listak_listamuveletek/`, note: null },
+  { step: 5, title: 'For ciklus', href: `${base}/blog/for-ciklus-python/`, note: null },
   { step: 6, title: 'While ciklus és feltételek', href: null, note: 'hamarosan' },
-  { step: 7, title: 'Fájlbeolvasás', href: `${BASE}blog/fajlbeolvasas/`, note: null },
+  { step: 7, title: 'Fájlbeolvasás', href: `${base}/blog/fajlbeolvasas/`, note: null },
   { step: 8, title: 'Érettségi típusfeladatok', href: null, note: 'hamarosan' },
 ];
 const roadmapOrder = new Map(
@@ -106,7 +106,7 @@ posts.sort((a, b) => {
               const tags = post.data.tags ?? [];
               return (
                 <li class="post-card" data-tags={tags.join('|')}>
-                  <a href={`${BASE}blog/${post.id}/`}>
+                  <a href={`${base}/blog/${post.id}/`}>
                     {post.data.heroImage && (
                       <img src={post.data.heroImage.src} alt={post.data.title} />
                     )}

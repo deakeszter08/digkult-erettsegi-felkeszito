@@ -5,7 +5,7 @@ import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import MelyiketValasszam from '../components/MelyiketValasszam.astro';
 
-const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 
@@ -29,7 +29,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 					Válaszd ki a céljaidhoz és időbeosztásodhoz legjobban passzoló formát!
 				</p>
 			</header>
-			<MelyiketValasszam contactHref={`${BASE}kapcsolat/`} />
+			<MelyiketValasszam contactHref=`${base}/kapcsolat` />
 
 			<div class="pricing-grid">
 				
@@ -50,7 +50,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <li>Személyre szabott gyakorlófeladatok</li>
         <li>Azonnali segítség, ha elakadsz</li>
     </ul>
-    <a class="btn btn-primary" href={`${BASE}kapcsolat/`}>
+    <a class="btn btn-primary" href=`${base}/kapcsolat`>
         Egyéni órát szeretnék
     </a>
 </article>
@@ -73,7 +73,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <li>Vizsgatípusú feladatok közös feldolgozása</li>
         <li>Kedvezőbb ár az egyéni órákhoz képest</li>
     </ul>
-    <a class="btn btn-primary" href={`${BASE}kapcsolat/`}>
+    <a class="btn btn-primary" href=`${base}/kapcsolat`>
         Csatlakozom a csoporthoz
     </a>
 </article>
@@ -98,7 +98,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <li>Személyre szabott tanulási terv</li>
         <li>Javasolt tanulási sorrend és prioritások</li>
     </ul>
-    <a class="btn btn-secondary" href={`${BASE}kapcsolat/`}>
+    <a class="btn btn-secondary" href=`${base}/kapcsolat`>
         Ezt szeretném
     </a>
 </article>
@@ -121,7 +121,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <li>Havi értékelés a haladásoddal kapcsolatban</li>
         <li>Az ütemterv módosítása a fejlődésed alapján</li>
     </ul>
-    <a class="btn btn-secondary" href={`${BASE}kapcsolat/`}>
+    <a class="btn btn-secondary" href=`${base}/kapcsolat`>
         Tanári támogatást kérek
     </a>
 </article>
@@ -145,7 +145,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 		<li>Havi 1 Egyéni konzultáció előre egyeztetett időpontban</li>
         <li>Havi visszajelzés a haladásoddal kapcsolatban</li>
     </ul>
-    <a class="btn btn-secondary" href={`${BASE}kapcsolat/`}>
+    <a class="btn btn-secondary" href=`${base}/kapcsolat`>
         Egyéni mentorálást szeretnék
     </a>
 </article>
