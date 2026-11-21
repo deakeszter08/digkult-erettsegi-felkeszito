@@ -22,7 +22,7 @@ const feladatok = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		topic: z.string(),
-		difficulty: z.enum(['alapozó', 'érettségi']).default('alapozó'),
+		difficulty: z.enum(['alapozó','haladó', 'érettségi']).default('alapozó'),
 		order: z.number().default(1),
 	}),
 });
