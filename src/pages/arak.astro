@@ -1,0 +1,271 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import MelyiketValasszam from '../components/MelyiketValasszam.astro';
+---
+
+
+
+<!doctype html>
+<html lang="hu">
+	<head>
+	<meta charset="utf-8" />
+		<BaseHead
+			title={`Árak és felkészülési formák | ${SITE_TITLE}`}
+			description="Egyéni magánóra, kiscsoportos felkészülés és személyre szabott felkészülési terv digitális kultúra érettségire."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="arak-main">
+			<header class="arak-header">
+				<p class="eyebrow">Felkészülési lehetőségek</p>
+				<h1>Elérhető csomagok és Árak</h1>
+				<p class="lead">
+					Válaszd ki a céljaidhoz és időbeosztásodhoz legjobban passzoló formát!
+				</p>
+			</header>
+			<MelyiketValasszam contactHref="/about#kapcsolat" />
+
+			<div class="pricing-grid">
+				
+<!-- 1. EGYÉNI FELKÉSZÜLÉS -->
+<article class="pricing-card">
+    <span class="tag">Teljes figyelem és személyes segítség</span>
+    <h2>Egyéni felkészülés</h2>
+    <p class="price">8 000 Ft / alkalom</p>
+    <p class="desc">
+        A tanulás minden percében rád figyelek. A te tudásszintedhez,
+        tempódhoz és kérdéseidhez igazítjuk az órákat, legyen szó
+        az alapok elsajátításáról vagy emelt szintű feladatok gyakorlásáról.
+    </p>
+    <ul>
+        <li>100%-ban egyéni figyelem és haladási ütem</li>
+        <li>Érthető magyarázat a nehéz témakörökhöz</li>
+        <li>Közös feladatmegoldás és részletes hibajavítás</li>
+        <li>Személyre szabott gyakorlófeladatok</li>
+        <li>Azonnali segítség, ha elakadsz</li>
+    </ul>
+    <a class="btn btn-primary" href="/kapcsolat">
+        Egyéni órát szeretnék
+    </a>
+</article>
+
+
+<!-- 2. KISCSOPORTOS FELKÉSZÜLÉS -->
+<article class="pricing-card featured">
+    <span class="tag">Közös tanulás, kedvezőbb áron</span>
+    <h2>Kiscsoportos felkészítő</h2>
+    <p class="price">5 000 Ft / alkalom / fő</p>
+    <p class="desc">
+        Tanári irányítással, kis létszámú (2-3 fős) csoportban készülhetünk
+        fel együtt. Közösen oldunk meg feladatokat, megbeszéljük
+        a nehézségeket ezáltal egymás gondolataiból is tudtok tanulni.
+    </p>
+    <ul>
+        <li>Heti 1 x 90p perc Online óra</li>
+        <li>Közös feladatmegoldás tanári irányítással</li>
+        <li>Kérdezési és gyakorlási lehetőség</li>
+        <li>Vizsgatípusú feladatok közös feldolgozása</li>
+        <li>Kedvezőbb ár az egyéni órákhoz képest</li>
+    </ul>
+    <a class="btn btn-primary" href="/kapcsolat">
+        Csatlakozom a csoporthoz
+    </a>
+</article>
+
+
+<!-- 3. FELKÉSZÜLÉSI TERV -->
+
+<article class="pricing-card">
+    <span class="tag">Személyre szabott felmérés</span>
+    <h2>Tanulási terv szintfelméréssel</h2>
+    <p class="price">9 900 Ft / terv</p>
+    <p class="desc">
+        Nem tudod, hol tartasz, és mire kellene koncentrálnod?
+        Felmérem a jelenlegi tudásodat, azonosítom a hiányosságaidat,
+        majd egy személyre szabott tanulási tervet készítek,
+        amely megmutatja, hogyan készülj fel hatékonyan a vizsgádra.
+    </p>
+    <ul>
+        <li>Kiindulási tudásszint felmérése</li>
+        <li>Erősségek és hiányosságok azonosítása</li>
+        <li>Fejlesztendő témakörök meghatározása</li>
+        <li>Személyre szabott tanulási terv</li>
+        <li>Javasolt tanulási sorrend és prioritások</li>
+    </ul>
+    <a class="btn btn-secondary" href="/kapcsolat">
+        Ezt szeretném
+    </a>
+</article>
+
+
+
+<!-- 4. Heti érettségi gyakorló -->
+<article class="pricing-card">
+    <span class="tag">Önálló tanulás + rendszeres tanári kontroll</span>
+    <h2>Felkészülés támogatással</h2>
+    <p class="price">14 900 Ft / hó</p>
+    <p class="desc">
+        Nemcsak azt szeretnéd tudni, mit tanulj, hanem azt is,
+        hogy valóban jól haladsz-e? A saját ütemterved alapján
+        tanulsz, én pedig rendszeresen ellenőrzöm a munkádat
+        és visszajelzést adok.
+    </p>
+    <ul>
+        <li>Heti 1 feladatsor -> feladatellenőrzés és tanári visszajelzés</li>
+        <li>Havi értékelés a haladásoddal kapcsolatban</li>
+        <li>Az ütemterv módosítása a fejlődésed alapján</li>
+    </ul>
+    <a class="btn btn-secondary" href="/kapcsolat">
+        Tanári támogatást kérek
+    </a>
+</article>
+
+
+<!-- 5. EGYÉNI MENTORÁLÁS -->
+<article class="pricing-card">
+    <span class="tag">Komplex, személyre szabott támogatás</span>
+    <h2>Érettségi Mentorprogram</h2>
+    <p class="price">24 900 Ft / hó</p>
+    <p class="desc">
+        Ha a rendszeres ellenőrzés mellett személyes tanári
+        segítségre is szükséged van, ez a neked való megoldás.
+        
+    </p>
+    <ul>
+        <li>Minden héten személyre szabott feladatsor.</li>
+		<li>Visszaküldött feladatok javítása írásban</li>
+        <li>Célzott segítség a problémás témakörökben</li>
+        <li>1 db komplett Próba-érettségi </li>
+		<li>Havi 1 Egyéni konzultáció előre egyeztetett időpontban</li>
+        <li>Havi visszajelzés a haladásoddal kapcsolatban</li>
+    </ul>
+    <a class="btn btn-secondary" href="/kapcsolat">
+        Egyéni mentorálást szeretnék
+    </a>
+</article>
+
+
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			.arak-main {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 2rem clamp(1rem, 3vw, 2.5rem) 4rem;
+			}
+
+			.arak-header {
+				margin-bottom: 2rem;
+			}
+
+			.eyebrow {
+				margin: 0 0 0.4rem;
+				font-size: 0.85rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				color: #2563eb;
+			}
+
+			.arak-header h1 {
+				margin: 0 0 0.6rem;
+			}
+
+			.lead {
+				margin: 0;
+				line-height: 1.6;
+				max-width: 68ch;
+			}
+
+			.pricing-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 1.2rem;
+				align-items: stretch;
+			}
+
+			.pricing-card {
+				display: flex;
+				flex-direction: column;
+				padding: 1.35rem;
+				border: 1px solid rgba(128, 128, 128, 0.25);
+				border-radius: 12px;
+			}
+
+			.pricing-card.featured {
+				border-color: #2563eb;
+			}
+
+			.tag {
+				align-self: flex-start;
+				font-size: 0.75rem;
+				font-weight: 700;
+				padding: 0.2rem 0.55rem;
+				border-radius: 999px;
+				background: rgba(37, 99, 235, 0.12);
+				color: #2563eb;
+				margin-bottom: 0.6rem;
+			}
+
+			.pricing-card h2 {
+				margin: 0 0 0.4rem;
+				font-size: 1.2rem;
+			}
+
+			.price {
+				margin: 0 0 0.8rem;
+				font-size: 1.25rem;
+				font-weight: 700;
+			}
+
+			.desc {
+				margin: 0 0 1rem;
+				line-height: 1.55;
+				font-size: 0.95rem;
+			}
+
+			.pricing-card ul {
+				margin: 0 0 1.4rem;
+				padding-left: 1.15rem;
+			}
+
+			.pricing-card li {
+				margin-bottom: 0.4rem;
+				line-height: 1.45;
+				font-size: 0.92rem;
+			}
+
+			.btn {
+				margin-top: auto;
+				text-align: center;
+				padding: 0.65rem 1rem;
+				border-radius: 8px;
+				text-decoration: none;
+				font-weight: 600;
+				font-size: 0.92rem;
+			}
+
+			.btn-primary {
+				background: #2563eb;
+				color: #fff;
+			}
+
+			.btn-secondary {
+				border: 1px solid rgba(128, 128, 128, 0.35);
+				color: inherit;
+			}
+
+			@media (max-width: 900px) {
+				.pricing-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</body>
+</html>

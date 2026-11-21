@@ -6,54 +6,356 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="hu">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to
-				build a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your{' '}
-				<code>astro.config.mjs</code> file. You can customize your setup with{' '}
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like
-				Tailwind, React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>
-					Edit this page in <code>src/pages/index.astro</code>
-				</li>
-				<li>
-					Edit the site header items in <code>src/components/Header.astro</code>
-				</li>
-				<li>
-					Add your name to the footer in <code>src/components/Footer.astro</code>
-				</li>
-				<li>
-					Check out the included blog posts in <code>src/content/blog/</code>
-				</li>
-				<li>
-					Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code>
-				</li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to{' '}
-				<a href="https://docs.astro.build/">read the docs</a> or{' '}
-				<a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out{' '}
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a> by{' '}
-				<a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="home-main">
+			<section class="hero">
+				<p class="eyebrow">Digitális kultúra érettségi felkészítő</p>
+				<h1>Ez az oldal a Digitális kultúra érettségire való felkészülésben nyújt segítséget.</h1>
+				<p class="lead">
+					Strukturált tanulási ütemterv, gyakorlófeladatok és érthető magyarázatok – hogy magabiztosan, rutinból oldd meg a vizsgafeladatokat.
+				</p>
+			</section>
+
+			<section class="section-block" aria-labelledby="mikor-kezdjuk">
+				<h2 id="mikor-kezdjuk">Mennyi idő szükséges a felkészüléshez?</h2>
+
+				<div class="cards-grid">
+					<article class="info-card">
+						<h3>Időtartam és rendszeresség</h3>
+						<ul>
+							<li><strong>Átlagosan 6-8 hónap</strong> alatt biztonságosan fel lehet készülni.</li>
+							<li>
+								<strong>Heti 2 alkalommal:</strong> kényelmesebb tempó – nulla előismerettel
+								ezt ajánlom!
+							</li>
+							<li>
+								<strong>Heti 1 alkalom:</strong> megvalósítható, de jóval intenzívebb.
+							</li>
+						</ul>
+					</article>
+
+					<article class="info-card">
+						<h3>Vizsgaidőszak szerinti tervezés</h3>
+						<ul>
+							<li>
+								<strong>Májusi vizsga:</strong> célszerű <strong>szeptemberben </strong>
+								elkezdeni a felkészülést.
+							</li>
+							<li>
+								<strong>Októberi vizsga:</strong> ajánlott <strong>január–február </strong>
+								környékén megkezdeni, hiszen a nyári szünetben a felkészülés jellemzően
+								kissé lazább hangvételű lesz, és kevésbé intenzív.
+							</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<section class="section-block" aria-labelledby="felkeszules-menete">
+				<h2 id="felkeszules-menete">A felkészülés menete és súlyozása</h2>
+				<p class="section-intro">
+					Az emelt szintű felkészülés során a témakörök aránya és ezáltal a felkészülési idő is
+					eltérő:
+				</p>
+
+				<div class="cards-grid three-col">
+					<article class="info-card">
+						<span class="badge">50 pont · ~60–70% súly</span>
+						<h3>1. Programozás</h3>
+						<ul>
+							<li>2-3 alkalom elméleti alapozás.</li>
+							<li>Folyamatos gyakorló feladatok témakörönként.</li>
+							<li>Teljes érettségi feladatsorok megoldása.</li>
+							<li>Időre történő gyakorlás a vizsga előtt.</li>
+							<li><strong>Kb. 20 feladatsor</strong> megoldása.</li>
+						</ul>
+					</article>
+
+					<article class="info-card">
+						<span class="badge">35 pont</span>
+						<h3>2. Adatbázis-kezelés</h3>
+						<ul>
+							<li>1–2 alkalom elméleti áttekintés.</li>
+							<li>Érettségi feladatok gyakorlása.</li>
+							<li><strong>Kb. 10 feladatsor</strong> megoldása.</li>
+						</ul>
+					</article>
+
+					<article class="info-card">
+						<span class="badge">35 pont</span>
+						<h3>3. Választható feladatok</h3>
+						<ul>
+							<li>Párhuzamos felkészülés.</li>
+							<li>Erősségekhez igazított választás.</li>
+							<li><strong>Kb. 6–8 feladatsor</strong> megoldása ajánlott!</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<section class="section-block" aria-labelledby="tanulasi-sorrend">
+				<h2 id="tanulasi-sorrend">Ajánlott tanulási sorrend az emelt szintű vizsgához</h2>
+				<p class="section-intro">
+					A diákok többsége az 1. választott feladatnál a <strong>Táblázatkezelést (Excelt) </strong>
+					választja, ezért erre a stratégiára épülő tanulási sorrendet érdemes követni:
+				</p>
+
+				<ol class="order-list">
+					<li>
+						<strong>Python</strong>
+						<ol>
+							<li>Elmélet átolvasása, alap algoritmusok begyakorlása és középszintű feladatok</li>
+							<li>Fájlkezelés, listák listákban és szótárak</li>
+							<li>Összetett feladatok, korábbi emelt szintűek megoldása</li>
+							<li>Python kvíz megoldása</li>
+						</ol>
+					</li>
+					<li>
+						<strong>Adatbázis-kezelés (SQL)</strong>
+						<ol>
+							<li>Adatbázis fogalmának áttekintése, szintaxist átnézni</li>
+							<li>SQL lekérdezések írása</li>
+							<li>Emelt szintű feladatokat megoldani</li>
+							<li>SQL kvíz megoldása</li>
+						</ol>
+					</li>
+					<li>
+						<strong>Excel</strong>
+						<ol>
+							<li>Függvényeket átböngészni</li>
+							<li>Középszintű érettségit megoldani 1–2 feladatsort</li>
+							<li>Komplett feladatok (Emelt szint)</li>
+						</ol>
+					</li>
+					<li>
+						<strong>Szóbelire készülés</strong>
+						<p class="subnote">
+							Ide tartozik a <strong>dokumentumkészítés</strong> témakör alapos ismerete is!
+						</p>
+					</li>
+				</ol>
+			</section>
+
+			<section class="section-block" aria-labelledby="otthoni-gyakorlas">
+				<h2 id="otthoni-gyakorlas">Mennyit kell készülni az órák között?</h2>
+
+				<div class="cards-grid">
+					<article class="info-card">
+						<h3>Önálló gyakorlás szerepe</h3>
+						<p>
+							Az otthoni gyakorlás kulcsfontosságú a sikeres felkészüléshez. Érdemes heti
+							rendszerességgel házi feladatokat, gyakorló feladatokat megoldani, hogy a tanult
+							módszerek rögzüljenek és magabiztosan tudjuk alkalmazni őket a vizsgán.
+						</p>
+						<ul>
+							<li>Rendszeres gyakorlás elengedhetetlen.</li>
+							<li><strong>Heti minimum 2 óra</strong> önálló feladatmegoldás javasolt.</li>
+							<li>A cél az automatizált, magabiztos feladatmegoldás.</li>
+						</ul>
+					</article>
+
+					<article class="info-card">
+						<h3>Korábbi érettségi feladatsorok</h3>
+						<p>
+							Különösen hasznosak a korábbi érettségi feladatsorok. Javasolt legalább
+							<strong>15–20 korábbi emelt szintű digitális kultúra</strong> (korábban
+							informatika) érettségi feladat megoldása.
+						</p>
+						<p class="highlight-note">
+							Ez a mennyiség a <strong>programozás feladatrészre</strong> értendő! A többi
+							témakörből <strong>min. 10-et</strong> érdemes megoldani!
+						</p>
+						<ul>
+							<li>Segítenek megérteni a vizsga logikáját és feladattípusait.</li>
+							<li>Lehetővé teszik az időbeosztás gyakorlását.</li>
+							<li>Növelik az önbizalmat, és csökkentik a vizsgastresszt.</li>
+							<li>Rendszeres ismétléssel a feladatok rutinná válnak.</li>
+						</ul>
+					</article>
+				</div>
+			</section>
 		</main>
 		<Footer />
+
+		<style>
+			.home-main {
+				max-width: 960px;
+				margin: 0 auto;
+				padding: 2rem 1rem 4rem;
+			}
+
+			.hero {
+				padding: 1.5rem 0 2.5rem;
+				border-bottom: 1px solid rgba(128, 128, 128, 0.22);
+			}
+
+			.eyebrow {
+				margin: 0 0 0.5rem;
+				font-size: 0.85rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				color: #2563eb;
+			}
+
+			.hero h1 {
+				margin: 0 0 0.9rem;
+				line-height: 1.2;
+				font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+			}
+
+			.lead {
+				margin: 0 0 1.5rem;
+				line-height: 1.65;
+				max-width: 72ch;
+				opacity: 0.92;
+			}
+
+			.hero-actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+			}
+
+			.btn {
+				display: inline-block;
+				padding: 0.65rem 1.15rem;
+				border-radius: 8px;
+				text-decoration: none;
+				font-weight: 600;
+				font-size: 0.95rem;
+			}
+
+			.btn-primary {
+				background: #2563eb;
+				color: #fff;
+			}
+
+			.btn-secondary {
+				border: 1px solid rgba(128, 128, 128, 0.35);
+				color: inherit;
+			}
+
+			.section-block {
+				padding: 2.5rem 0 0;
+			}
+
+			.section-block h2 {
+				margin: 0 0 0.6rem;
+				font-size: 1.5rem;
+			}
+
+			.section-intro {
+				margin: 0 0 1.25rem;
+				line-height: 1.6;
+				opacity: 0.92;
+			}
+
+			.cards-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 1.15rem;
+				margin-top: 1rem;
+			}
+
+			.info-card {
+				padding: 1.25rem 1.35rem;
+				border: 1px solid rgba(128, 128, 128, 0.24);
+				border-radius: 12px;
+			}
+
+			.info-card h3 {
+				margin: 0 0 0.7rem;
+				font-size: 1.1rem;
+			}
+
+			.info-card p {
+				margin: 0 0 0.75rem;
+				line-height: 1.58;
+			}
+
+			.info-card ul {
+				margin: 0;
+				padding-left: 1.2rem;
+			}
+
+			.info-card li {
+				margin-bottom: 0.4rem;
+				line-height: 1.5;
+			}
+
+			.badge {
+				display: inline-block;
+				margin-bottom: 0.5rem;
+				padding: 0.2rem 0.6rem;
+				border-radius: 999px;
+				font-size: 0.78rem;
+				font-weight: 700;
+				background: rgba(37, 99, 235, 0.12);
+				color: #2563eb;
+			}
+
+			.order-list {
+				margin: 0;
+				padding-left: 1.3rem;
+			}
+
+			.order-list > li {
+				margin-bottom: 1.1rem;
+				padding: 1rem 1.2rem;
+				border: 1px solid rgba(128, 128, 128, 0.2);
+				border-radius: 10px;
+			}
+
+			.order-list > li > strong {
+				display: block;
+				font-size: 1.08rem;
+				margin-bottom: 0.45rem;
+			}
+
+			.order-list ol {
+				margin: 0;
+				padding-left: 1.25rem;
+			}
+
+			.order-list ol li {
+				margin-bottom: 0.3rem;
+				line-height: 1.5;
+			}
+
+			.subnote {
+				margin: 0.25rem 0 0;
+				line-height: 1.5;
+			}
+
+			.highlight-note {
+				padding: 0.65rem 0.85rem;
+				border-left: 3px solid #2563eb;
+				background: rgba(37, 99, 235, 0.06);
+				border-radius: 0 6px 6px 0;
+				font-size: 0.92rem;
+			}
+			.cards-grid.three-col {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	align-items: stretch;
+}
+
+@media (max-width: 900px) {
+	.cards-grid.three-col {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 640px) {
+	.cards-grid.three-col {
+		grid-template-columns: 1fr;
+	}
+}
+		</style>
 	</body>
 </html>

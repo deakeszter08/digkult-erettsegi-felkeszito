@@ -1,0 +1,175 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+
+const feladatok = (await getCollection('feladatok')).sort(
+	(a, b) => a.data.order - b.data.order
+);
+
+const topics = Array.from(new Set(feladatok.map((f) => f.data.topic))).sort((a, b) =>
+	a.localeCompare(b, 'hu')
+);
+
+const renderedFeladatok = await Promise.all(
+	feladatok.map(async (feladat) => {
+		const { Content } = await render(feladat);
+		return { feladat, Content };
+	})
+);
+---
+
+<!doctype html>
+<html lang="hu">
+	<head>
+		<BaseHead
+			title={`Gyakorlófeladatok | ${SITE_TITLE}`}
+			description="Digitális kultúra érettségi gyakorlófeladatok témakörökre bontva, megoldásokkal."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="feladatok-main">
+			<header class="feladatok-header">
+				<h1>Gyakorlófeladatok</h1>
+				<p>
+					A feladatokat először próbáld meg egyedül megoldani, és csak utána
+					nyisd le a megoldást!
+				</p>
+			</header>
+
+			<div class="filter-bar" role="group" aria-label="Témakör szűrő">
+				<button type="button" class="filter-btn active" data-topic="all">
+					Összes ({renderedFeladatok.length})
+				</button>
+				{topics.map((topic) => (
+					<button type="button" class="filter-btn" data-topic={topic}>
+						{topic}
+					</button>
+				))}
+			</div>
+
+			<div class="feladatok-list">
+				{renderedFeladatok.map(({ feladat, Content }) => (
+					<article class="feladat-card" data-topic={feladat.data.topic}>
+						<div class="feladat-meta">
+							<span class="feladat-topic">{feladat.data.topic}</span>
+							<span class="feladat-diff">{feladat.data.difficulty}</span>
+						</div>
+						<h2>{feladat.data.title}</h2>
+						<div class="feladat-content">
+							<Content />
+						</div>
+					</article>
+				))}
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			.feladatok-main {
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 1.5rem 1rem 3rem;
+			}
+
+			.feladatok-header h1 {
+				margin: 0 0 0.5rem;
+			}
+
+			.feladatok-header p {
+				margin: 0;
+				line-height: 1.55;
+			}
+
+			.filter-bar {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				margin: 1.5rem 0 2rem;
+			}
+
+			.filter-btn {
+				padding: 0.45rem 0.9rem;
+				border-radius: 999px;
+				border: 1px solid rgba(128, 128, 128, 0.35);
+				background: transparent;
+				color: inherit;
+				font: inherit;
+				font-size: 0.9rem;
+				cursor: pointer;
+			}
+
+			.filter-btn.active {
+				background: #2563eb;
+				border-color: #2563eb;
+				color: #fff;
+				font-weight: 600;
+			}
+
+			.feladat-card {
+				padding: 1.25rem 1.4rem;
+				margin-bottom: 1.25rem;
+				border: 1px solid rgba(128, 128, 128, 0.25);
+				border-radius: 12px;
+			}
+
+			.feladat-meta {
+				display: flex;
+				gap: 0.6rem;
+				align-items: center;
+				margin-bottom: 0.4rem;
+				font-size: 0.78rem;
+				font-weight: 600;
+			}
+
+			.feladat-topic {
+				color: #2563eb;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+			}
+
+			.feladat-diff {
+				padding: 0.15rem 0.5rem;
+				border-radius: 999px;
+				background: rgba(128, 128, 128, 0.14);
+			}
+
+			.feladat-card h2 {
+				margin: 0 0 0.75rem;
+				font-size: 1.15rem;
+			}
+
+			.feladat-card :global(details) {
+				margin-top: 0.9rem;
+			}
+
+			.feladat-card :global(summary) {
+				cursor: pointer;
+				font-weight: 600;
+				color: #2563eb;
+			}
+		</style>
+
+		<script>
+			const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+			const cards = document.querySelectorAll<HTMLElement>('.feladat-card');
+
+			buttons.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const selectedTopic = btn.dataset.topic ?? 'all';
+
+					buttons.forEach((b) => b.classList.remove('active'));
+					btn.classList.add('active');
+
+					cards.forEach((card) => {
+						card.hidden =
+							selectedTopic !== 'all' && card.dataset.topic !== selectedTopic;
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

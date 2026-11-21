@@ -1,112 +1,422 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import '../../styles/blog.css';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+const posts = await getCollection('blog');
+
+const allTags = Array.from(
+  new Set(posts.flatMap((post) => post.data.tags ?? []))
+).sort((a, b) => a.localeCompare(b, 'hu'));
+
+// Sorszámozott haladási ív: ha van href, kattintható; ha null, még készülő lépés
+const roadmapSteps = [
+  { step: 1, title: 'Változók és adattípusok', href: '/blog/valtozok_adattipusok/', note: null },
+  { step: 2, title: 'Adatbekérés (input)', href: '/blog/adatbekeres_input/', note: null },
+  { step: 3, title: 'Elágazások (if / elif / else)', href: '/blog/elagazasok_if_elif_else/', note: null },
+  { step: 4, title: 'Listák alapjai', href: '/blog/listak_listamuveletek/', note: null },
+  { step: 5, title: 'For ciklus', href: '/blog/for-ciklus-python/', note: null },
+  { step: 6, title: 'While ciklus és feltételek', href: null, note: 'hamarosan' },
+  { step: 7, title: 'Fájlbeolvasás', href: '/blog/fajlbeolvasas/', note: null },
+  { step: 8, title: 'Érettségi típusfeladatok', href: null, note: 'hamarosan' },
+];
+const roadmapOrder = new Map(
+  roadmapSteps
+    .filter((step) => step.href)
+    .map((step, index) => [
+      step.href!.replace('/blog/', '').replace(/\/$/, ''),
+      index,
+    ])
 );
+
+posts.sort((a, b) => {
+  const orderA = roadmapOrder.get(a.id) ?? Infinity;
+  const orderB = roadmapOrder.get(b.id) ?? Infinity;
+
+  return orderA - orderB;
+});
+
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{posts.map((post) => (
-						<li>
-							<a href={`/blog/${post.id}/`}>
-								{post.data.heroImage && (
-									<Image width={720} height={360} src={post.data.heroImage} alt="" />
-								)}
-								<h4 class="title">{post.data.title}</h4>
-								<p class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-							</a>
-						</li>
-					))}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+<html lang="hu">
+  <head>
+    <BaseHead
+      title={`Cikkek és feladatok | ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="blog-index-main">
+      <div class="study-layout">
+        <aside class="roadmap-sidebar" aria-label="Haladási útvonal">
+          <div class="roadmap-header">
+            <h2>Ajánlott haladási sorrend</h2>
+            <p>Ebben a sorrendben épülnek egymásra a témakörök.</p>
+          </div>
+          <ol class="roadmap-list">
+            {roadmapSteps.map((item) => (
+              <li class:list={['roadmap-item', { 'roadmap-item--upcoming': !item.href }]}>
+                <span class="roadmap-num">{item.step}</span>
+                <div class="roadmap-body">
+                  {item.href ? (
+                    <a href={item.href} class="roadmap-link">
+                      {item.title}
+                    </a>
+                  ) : (
+                    <span class="roadmap-title">{item.title}</span>
+                  )}
+                  {item.note && <span class="roadmap-badge">{item.note}</span>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </aside>
+
+        <div class="right-column">
+          <div class="page-header">
+            <h1>Digitális kultúra érettségi</h1>
+            <h2>– Python elméleti anyagok és feladatok</h2>
+            <p>Minden cikk végén vannak kisebb <strong>feladatok</strong>, érdemes őket is megoldani!</p>
+            <p>Válogass témakörök szerint:</p>
+          </div>
+
+         
+
+          <div class="filter-bar" role="group" aria-label="Témakör szűrő">
+            <button type="button" class="filter-btn active" data-filter="all">
+              Összes ({posts.length})
+            </button>
+            {allTags.map((tag) => (
+              <button type="button" class="filter-btn" data-filter={tag}>
+                {tag}
+              </button>
+            ))}
+          </div>
+
+          <ul class="posts-list" id="posts-list">
+            {posts.map((post) => {
+              const tags = post.data.tags ?? [];
+              return (
+                <li class="post-card" data-tags={tags.join('|')}>
+                  <a href={`/blog/${post.id}/`}>
+                    {post.data.heroImage && (
+                      <img src={post.data.heroImage.src} alt={post.data.title} />
+                    )}
+                    <h2 class="post-title">{post.data.title}</h2>
+                    <p class="post-date">
+                      <FormattedDate date={post.data.pubDate} />
+                    </p>
+                    <p class="post-desc">{post.data.description}</p>
+                    {tags.length > 0 && (
+                      <div class="post-tags">
+                        {tags.map((tag) => (
+                          <span class="tag-pill">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+
+          <p class="empty-state" id="empty-state" hidden>
+            Ehhez a témakörhöz még nincs feltöltött cikk.
+          </p>
+
+          <aside class="practice-banner" aria-label="Gyakorlófeladatok">
+            <div class="practice-banner__text">
+              <span class="practice-badge">Élesítés a gyakorlatban</span>
+              <h3>Már érted a logikát? Itt az ideje gyakorolni!</h3>
+              <p>
+                Több érettségi-jellegű és alapozó feladat vár rád témakörökre bontva, megoldási
+                tippekkel.
+              </p>
+            </div>
+            <a class="practice-btn" href="/gyakorlofeladatok">
+              Irány a gyakorlófeladatokhoz →
+            </a>
+          </aside>
+        </div>
+      </div>
+    </main>
+    <Footer />
+
+    <style>
+	
+/* TÉMAKÖR SZŰRŐ */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 14px;
+  background: rgba(128, 128, 128, 0.04);
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.06);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
+}
+
+.filter-btn:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .filter-bar {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .filter-btn {
+    flex: 1 1 auto;
+    padding: 0.65rem 0.8rem;
+    font-size: 0.82rem;
+  }
+}
+
+      .blog-index-main {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1.5rem 1rem;
+      }
+
+      .study-layout {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .roadmap-sidebar {
+        position: sticky;
+        top: 1.5rem;
+        padding: 1.1rem;
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-radius: 12px;
+        background: rgba(128, 128, 128, 0.04);
+      }
+
+      .roadmap-header h2 {
+        margin: 0 0 0.25rem;
+        font-size: 1.05rem;
+      }
+
+      .roadmap-header p {
+        margin: 0 0 0.9rem;
+        font-size: 0.82rem;
+        line-height: 1.4;
+        opacity: 0.8;
+      }
+
+      .roadmap-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+
+      .roadmap-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        font-size: 0.88rem;
+        line-height: 1.35;
+      }
+
+      .roadmap-num {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.35rem;
+        height: 1.35rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(37, 99, 235, 0.14);
+        color: #2563eb;
+        margin-top: 0.05rem;
+      }
+
+      .roadmap-item--upcoming {
+        opacity: 0.55;
+      }
+
+      .roadmap-item--upcoming .roadmap-num {
+        background: rgba(128, 128, 128, 0.18);
+        color: inherit;
+      }
+
+      .roadmap-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+
+      .roadmap-link {
+        font-weight: 600;
+        text-decoration: none;
+        color: #2563eb;
+      }
+
+      .roadmap-link:hover {
+        text-decoration: underline;
+      }
+
+      .roadmap-title {
+        font-weight: 500;
+      }
+
+      .roadmap-badge {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        opacity: 0.85;
+      }
+
+      .right-column {
+        min-width: 0;
+      }
+
+      .practice-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        margin: 2.25rem 0 1.5rem;
+        padding: 1.35rem 1.5rem;
+        border: 1px solid rgba(37, 99, 235, 0.35);
+        border-radius: 12px;
+        background: rgba(37, 99, 235, 0.05);
+      }
+
+      .practice-badge {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #2563eb;
+        margin-bottom: 0.3rem;
+      }
+
+      .practice-banner h3 {
+        margin: 0 0 0.35rem;
+        font-size: 1.15rem;
+      }
+
+      .practice-banner p {
+        margin: 0;
+        font-size: 0.94rem;
+        line-height: 1.5;
+      }
+
+      .practice-btn {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.7rem 1.15rem;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.92rem;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .practice-btn:hover {
+        opacity: 0.92;
+      }
+
+      @media (max-width: 860px) {
+        .study-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .roadmap-sidebar {
+          position: static;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .practice-banner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .practice-btn {
+          white-space: normal;
+        }
+      }
+    </style>
+
+    <script>
+      const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+      const cards = document.querySelectorAll<HTMLLIElement>('#posts-list .post-card');
+      const emptyState = document.getElementById('empty-state');
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const selectedTag = btn.dataset.filter ?? 'all';
+
+          buttons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          let visibleCount = 0;
+
+          cards.forEach((card) => {
+            const cardTags = (card.dataset.tags ?? '').split('|').filter(Boolean);
+            const matches = selectedTag === 'all' || cardTags.includes(selectedTag);
+            card.hidden = !matches;
+            if (matches) visibleCount++;
+          });
+
+          if (emptyState) {
+            emptyState.hidden = visibleCount > 0;
+          }
+        });
+      });
+    </script>
+  </body>
 </html>

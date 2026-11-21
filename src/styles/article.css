@@ -1,0 +1,80 @@
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+main .prose {
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+main .prose .title h1 {
+  font-size: 2rem;
+  line-height: 1.5;
+  margin: 0.25rem 0 0.75rem 0;
+}
+
+main .prose .date {
+  font-size: 0.8rem;
+}
+
+main .prose h1 {
+  font-size: 1.3rem;
+  margin: 1.6rem 0 0.6rem 0;
+}
+
+main .prose h2 {
+  font-size: 1.15rem;
+  margin: 1.4rem 0 0.5rem 0;
+}
+
+main .prose p,
+main .prose ul,
+main .prose ol {
+  font-size: 0.92rem;
+  margin-top: 0;
+  margin-bottom: 0.9rem;
+}
+
+main .prose li {
+  margin-bottom: 0.3rem;
+}
+
+/* Soron belüli kód (`...`) */
+main .prose :not(pre) > code {
+  font-size: 1rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+}
+
+/* Python kódblokkok (```python) */
+main .prose pre {
+  font-size: 1rem;
+  line-height: 1.45;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.1rem 0;
+}
+
+main .prose pre code {
+  font-size: inherit;
+}
+
+@media (max-width: 720px) {
+  main .prose .title h1 {
+    font-size: 1.38rem;
+  }
+
+  main .prose,
+  main .prose p,
+  main .prose ul,
+  main .prose ol {
+    font-size: 0.88rem;
+  }
+
+  main .prose pre {
+    font-size: 0.76rem;
+  }
+}

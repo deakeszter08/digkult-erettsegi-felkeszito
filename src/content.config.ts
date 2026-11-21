@@ -14,7 +14,17 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			tags: z.array(z.string()).default([]),
 		}),
 });
+const feladatok = defineCollection({
+	loader: glob({ pattern: '**/*.md', base: './src/content/feladatok' }),
+	schema: z.object({
+		title: z.string(),
+		topic: z.string(),
+		difficulty: z.enum(['alapozó', 'érettségi']).default('alapozó'),
+		order: z.number().default(1),
+	}),
+});
 
-export const collections = { blog };
+export const collections = { blog, feladatok };

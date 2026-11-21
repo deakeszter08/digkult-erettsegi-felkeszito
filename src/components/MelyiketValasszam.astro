@@ -1,0 +1,314 @@
+---
+interface Props {
+	contactHref?: string;
+}
+
+const { contactHref = '/about#jelentkezes' } = Astro.props;
+---
+
+<section class="picker-box" aria-labelledby="picker-title">
+	<div class="picker-head">
+		<p class="picker-eyebrow">Segítség a döntéshez</p>
+		<h2 id="picker-title">Melyik felkészülési forma illik hozzád?</h2>
+		<p class="picker-sub">
+			Kattints a rád leginkább jellemző válaszra, és megmutatom, melyik csomaggal érdemes
+			indulni.
+		</p>
+	</div>
+
+	<div class="picker-stage" data-picker>
+		<!-- 1. Lépés -->
+		<div class="step" data-step="start">
+			<p class="question">1. Hogyan szeretsz tanulni és haladni?</p>
+			<div class="choices">
+				<button type="button" class="choice-btn" data-go="live">
+					<strong>Élő órákon, közvetlen tanári vezetéssel</strong>
+					<span>Rendszeres óra, közös gyakorlás, azonnali magyarázat</span>
+				</button>
+				<button type="button" class="choice-btn" data-go="self">
+					<strong>Főleg önállóan, a saját időbeosztásom szerint</strong>
+					<span>Jegyzet, ütemterv vagy rendszeres ellenőrzés kell</span>
+				</button>
+			</div>
+		</div>
+
+		<!-- 2A. Ág: Élő óra -->
+		<div class="step hidden" data-step="live">
+			<p class="question">2. Inkább személyre szabott tempót vagy kedvezőbb csoportos árat szeretnél?</p>
+			<div class="choices">
+				<button type="button" class="choice-btn" data-result="egyeni">
+					<strong>100%-ban rám szabott figyelmet és tempót</strong>
+					<span>Akár nulla alapról, akár célzott emelt szintű csiszolásra</span>
+				</button>
+				<button type="button" class="choice-btn" data-result="kiscsoport">
+					<strong>2–3 fős kiscsoportot, kedvezőbb áron</strong>
+					<span>Fix heti ritmus, közös feladatok és mások ötleteiből tanulás</span>
+				</button>
+			</div>
+			<button type="button" class="back-btn" data-go="start">← Vissza az előző kérdéshez</button>
+		</div>
+
+		<!-- 2B. Ág: Önálló tanulás -->
+		<div class="step hidden" data-step="self">
+			<p class="question">2. Mennyi visszajelzésre van szükséged az önálló munka mellé?</p>
+			<div class="choices">
+				<button type="button" class="choice-btn" data-result="terv">
+					<strong>Csak egy pontos szintfelmérésre és tanulási tervre</strong>
+					<span>Magamtól megoldom, csak tudjam, mit és milyen sorrendben</span>
+				</button>
+				<button type="button" class="choice-btn" data-result="tamogatott">
+					<strong>Heti feladatellenőrzésre és havi visszajelzésre</strong>
+					<span>Kell a külső kontroll, hogy ne csússzak el vagy rögzüljön rossz szokás</span>
+				</button>
+				<button type="button" class="choice-btn" data-result="mentoralas">
+					<strong>Havi 1 egyéni konzultációra és próba-érettségire is</strong>
+					<span>Önálló haladás + személyes hibaelemzés és éles vizsgateszt</span>
+				</button>
+			</div>
+			<button type="button" class="back-btn" data-go="start">← Vissza az előző kérdéshez</button>
+		</div>
+
+		<!-- Eredmény kártya -->
+		<div class="result-card hidden" data-step="result" aria-live="polite">
+			<span class="result-badge" data-res-badge></span>
+			<h3 data-res-title></h3>
+			<p class="result-price" data-res-price></p>
+			<p class="result-why" data-res-why></p>
+			<div class="result-actions">
+				<a href={contactHref} class="btn-primary" data-res-cta></a>
+				<button type="button" class="btn-ghost" data-go="start">Újrakezdem</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script is:inline>
+	(() => {
+		const root = document.querySelector('[data-picker]');
+		if (!root) return;
+
+		const results = {
+			egyeni: {
+				badge: 'Ajánlott forma · Élő magánóra',
+				title: 'Egyéni felkészülés',
+				price: '8 000 Ft / alkalom',
+				why: 'Akkor a leghatékonyabb, ha rugalmas időpontra, azonnali visszajelzésre és teljesen a saját elakadásaidra építő haladásra van szükséged.',
+				cta: 'Egyéni órát szeretnék',
+			},
+			kiscsoport: {
+				badge: 'Ajánlott forma · 2–3 fős csoport',
+				title: 'Kiscsoportos felkészítő',
+				price: '5 000 Ft / alkalom / fő',
+				why: 'Jó választás, ha szereted a fix heti keretet, a közös gyakorlást és a kedvezőbb árat, miközben mások kérdéseiből is tanulsz.',
+				cta: 'Csatlakozom a csoporthoz',
+			},
+			terv: {
+				badge: 'Ajánlott forma · Egyszeri induló csomag',
+				title: 'Tanulási terv szintfelméréssel',
+				price: '9 900 Ft / terv',
+				why: 'Akkor ideális, ha fegyelmezetten tudsz egyedül haladni, csak egy pontos diagnózisra, prioritásokra és ütemtervre van szükséged.',
+				cta: 'Ezt szeretném',
+			},
+			tamogatott: {
+				badge: 'Ajánlott forma · Heti házik, havi visszajelzés',
+				title: 'Felkészülés támogatással',
+				price: '14 900 Ft / hó',
+				why: 'Neked való, ha önállóan tanulsz, de kell a heti ellenőrzés és havi visszajelzés, hogy biztosan jó irányba haladj.',
+				cta: 'Tanári támogatást kérek',
+			},
+			mentoralas: {
+				badge: 'Ajánlott forma · Komplex rendszer',
+				title: 'Egyéni mentorálás',
+				price: '24 900 Ft / hó',
+				why: 'Erős biztonsági hálót ad: megvan az önálló keret és a heti kontroll, emellett havi egyéni konzultáció és próba-érettségi is segít a felkészülésben.',
+				cta: 'Egyéni mentorálást kérek',
+			},
+		};
+
+		const steps = root.querySelectorAll('[data-step]');
+		const showStep = (target) => {
+			steps.forEach((el) => {
+				el.classList.toggle('hidden', el.getAttribute('data-step') !== target);
+			});
+		};
+
+		root.addEventListener('click', (e) => {
+			const goBtn = e.target.closest('[data-go]');
+			if (goBtn) {
+				showStep(goBtn.getAttribute('data-go'));
+				return;
+			}
+
+			const resBtn = e.target.closest('[data-result]');
+			if (resBtn) {
+				const item = results[resBtn.getAttribute('data-result')];
+				if (!item) return;
+
+				root.querySelector('[data-res-badge]').textContent = item.badge;
+				root.querySelector('[data-res-title]').textContent = item.title;
+				root.querySelector('[data-res-price]').textContent = item.price;
+				root.querySelector('[data-res-why]').textContent = item.why;
+				root.querySelector('[data-res-cta]').textContent = item.cta;
+				showStep('result');
+			}
+		});
+	})();
+</script>
+
+<style>
+	.picker-box {
+		margin: 2.5rem 0;
+		padding: 1.5rem;
+		border: 1px solid rgba(128, 128, 128, 0.25);
+		border-radius: 14px;
+		background: rgba(128, 128, 128, 0.03);
+	}
+
+	.picker-eyebrow {
+		margin: 0 0 0.25rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #2563eb;
+	}
+
+	.picker-head h2 {
+		margin: 0 0 0.35rem;
+		font-size: 1.4rem;
+	}
+
+	.picker-sub {
+		margin: 0 0 1.25rem;
+		opacity: 0.88;
+		font-size: 0.95rem;
+	}
+
+	.question {
+		margin: 0 0 0.85rem;
+		font-weight: 700;
+		font-size: 1.05rem;
+	}
+
+	.choices {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 0.85rem;
+	}
+
+	.choice-btn {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.3rem;
+		text-align: left;
+		padding: 1rem 1.1rem;
+		border: 1px solid rgba(128, 128, 128, 0.3);
+		border-radius: 10px;
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+		font: inherit;
+		transition: border-color 0.15s ease, background-color 0.15s ease;
+	}
+
+	.choice-btn:hover {
+		border-color: #2563eb;
+		background: rgba(37, 99, 235, 0.06);
+	}
+
+	.choice-btn strong {
+		font-size: 0.98rem;
+	}
+
+	.choice-btn span {
+		font-size: 0.86rem;
+		opacity: 0.82;
+		line-height: 1.4;
+	}
+
+	.back-btn {
+		margin-top: 0.9rem;
+		padding: 0.35rem 0.6rem;
+		border: 0;
+		background: transparent;
+		color: inherit;
+		opacity: 0.75;
+		cursor: pointer;
+		font: inherit;
+		font-size: 0.88rem;
+	}
+
+	.back-btn:hover {
+		opacity: 1;
+		text-decoration: underline;
+	}
+
+	.result-card {
+		padding: 1.25rem;
+		border: 1px solid #2563eb;
+		border-radius: 12px;
+		background: rgba(37, 99, 235, 0.05);
+	}
+
+	.result-badge {
+		display: inline-block;
+		font-size: 0.76rem;
+		font-weight: 700;
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		background: rgba(37, 99, 235, 0.14);
+		color: #2563eb;
+		margin-bottom: 0.5rem;
+	}
+
+	.result-card h3 {
+		margin: 0 0 0.25rem;
+		font-size: 1.25rem;
+	}
+
+	.result-price {
+		margin: 0 0 0.65rem;
+		font-size: 1.1rem;
+		font-weight: 700;
+	}
+
+	.result-why {
+		margin: 0 0 1.1rem;
+		line-height: 1.55;
+		max-width: 68ch;
+	}
+
+	.result-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		align-items: center;
+	}
+
+	.btn-primary {
+		display: inline-block;
+		padding: 0.6rem 1.05rem;
+		border-radius: 8px;
+		background: #2563eb;
+		color: #fff;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.92rem;
+	}
+
+	.btn-ghost {
+		padding: 0.55rem 0.9rem;
+		border-radius: 8px;
+		border: 1px solid rgba(128, 128, 128, 0.35);
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+		font: inherit;
+		font-size: 0.9rem;
+	}
+
+	.hidden {
+		display: none;
+	}
+</style>

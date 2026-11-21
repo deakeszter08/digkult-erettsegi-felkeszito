@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="Kapcsolat – Digitális kultúra felkészítés"
+	description="Írj üzenetet magánórával, csoportos felkészüléssel vagy a tematikás edzéstervvel kapcsolatban."
+	pubDate={new Date('November 20 2026')}
+>
+	<p>
+		Itt tudod velem felvenni a kapcsolatot (kb 2 percet vesz igénybe a kitöltés, és nem jár semmilyen kötelezettséggel)
+	</p>
+<div class="form-wrapper">
+	<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeoUqixmPIjIYGKXEOmxgRt0QnHGbKL6bZomH6NbBUbRof10w/viewform?embedded=true" width="640" height="2059" frameborder="0" marginheight="0" marginwidth="0">Betöltés…</iframe>
+	</div>
+    <script>
+		const params = new URLSearchParams(window.location.search);
+		const formaParam = params.get('forma');
+		const selectEl = document.getElementById('forma') as HTMLSelectElement | null;
+
+		if (formaParam && selectEl) {
+			const map: Record<string, string> = {
+				maganoktatas: 'Magánoktatás',
+				csoportos: 'Csoportos felkészítés',
+				edzesterv: 'Tematikás edzésterv',
+			};
+			if (map[formaParam]) {
+				selectEl.value = map[formaParam];
+			}
+		}
+
+		const form = document.getElementById('contact-form') as HTMLFormElement | null;
+		const statusEl = document.getElementById('form-status');
+
+		form?.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			if (!statusEl) return;
+
+			statusEl.textContent = 'Küldés folyamatban...';
+			const formData = new FormData(form);
+
+			try {
+				const res = await fetch(form.action, {
+					method: 'POST',
+					body: formData,
+				});
+				const data = await res.json();
+
+				if (data.success) {
+					statusEl.textContent = 'Köszi! Az üzeneted megérkezett, hamarosan válaszolok.';
+					form.reset();
+				} else {
+					statusEl.textContent = 'Nem sikerült elküldeni az üzenetet. Próbáld meg újra!';
+				}
+			} catch {
+				statusEl.textContent = 'Hálózati hiba történt küldés közben.';
+			}
+		});
+	</script>
+</Layout>
+
+<style>
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+		margin: 1.5rem 0 2rem;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	label {
+		font-weight: 600;
+		font-size: 0.95rem;
+	}
+
+	input,
+	select,
+	textarea {
+		width: 100%;
+		padding: 0.7rem 0.85rem;
+		border: 1px solid rgba(128, 128, 128, 0.35);
+		border-radius: 8px;
+		font: inherit;
+		background: transparent;
+		color: inherit;
+	}
+
+	input:focus,
+	select:focus,
+	textarea:focus {
+		outline: 2px solid rgba(37, 99, 235, 0.5);
+		border-color: #2563eb;
+	}
+
+	.submit-btn {
+		align-self: flex-start;
+		padding: 0.75rem 1.35rem;
+		border: none;
+		border-radius: 8px;
+		background: #2563eb;
+		color: #fff;
+		font: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.submit-btn:hover {
+		opacity: 0.92;
+	}
+
+	.form-status {
+		margin: 0;
+		font-weight: 500;
+	}
+</style>

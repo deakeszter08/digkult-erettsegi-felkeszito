@@ -1,0 +1,702 @@
+---
+interface Props {
+  items?: string[];
+  variableName?: string;
+  title?: string;
+  intervalMs?: number;
+}
+
+const {
+  items = ['alma', 'körte', 'eper', 'banán'],
+  variableName = 'gyumolcs',
+  title = 'Próbáld ki a for ciklust!',
+  intervalMs = 1200,
+} = Astro.props;
+
+const animationId = `for-loop-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  class="for-animation"
+  id={animationId}
+  data-items={JSON.stringify(items)}
+  data-variable={variableName}
+  data-interval={intervalMs}
+>
+  <div class="animation-header">
+    <div>
+      <span class="animation-eyebrow">INTERAKTÍV SZEMLÉLTETÉS</span>
+      <h3>{title}</h3>
+      <p>Nézd meg, hogyan halad végig a for ciklus a lista elemein!</p>
+    </div>
+    <span class="animation-icon">🔁</span>
+  </div>
+
+  <div class="animation-code">
+    <div class="code-label">
+      <span class="code-dot"></span>
+      <span>Python kód</span>
+    </div>
+
+    <pre><code><span class="code-keyword">gyumolcsok</span> = {JSON.stringify(items)}
+<span class="code-keyword">for</span> {variableName} <span class="code-keyword">in</span> gyumolcsok:
+    <span class="code-function">print</span>({variableName})</code></pre>
+  </div>
+
+  <div class="animation-main">
+
+    <div class="list-heading">
+      <span>Lista elemei</span>
+      <span class="list-count">{items.length} elem</span>
+    </div>
+
+    <div class="animated-list">
+      {items.map((item, index) => (
+        <div class="animated-item" data-index={index}>
+          <span class="item-index">{index}</span>
+          <span class="item-value">{item}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="variable-panel">
+      <div class="variable-info">
+        <span class="variable-label">AKTUÁLIS VÁLTOZÓ</span>
+        <span class="variable-name">{variableName}</span>
+      </div>
+      <div class="variable-value" data-current-value>
+        —
+      </div>
+    </div>
+
+    <div class="progress-area">
+      <div class="progress-info">
+        <span>Haladás</span>
+        <span data-progress-text>0 / {items.length}</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" data-progress></div>
+      </div>
+    </div>
+
+    <div class="animation-status" data-status aria-live="polite">
+      Készen állsz? Indítsd el a ciklust!
+    </div>
+
+  </div>
+
+  <div class="animation-controls">
+    <div class="control-buttons">
+      <button type="button" class="control-btn reset-btn" data-reset aria-label="Újrakezdés">
+        ↺
+      </button>
+
+      <button type="button" class="control-btn step-btn" data-prev aria-label="Előző lépés">
+        ◀
+      </button>
+
+      <button type="button" class="control-btn play-btn" data-play>
+        ▶ Lejátszás
+      </button>
+
+      <button type="button" class="control-btn step-btn" data-next aria-label="Következő lépés">
+        ▶
+      </button>
+    </div>
+
+    <label class="speed-control">
+      Sebesség:
+      <select data-speed>
+        <option value="2000">Lassú</option>
+        <option value="1200" selected>Normál</option>
+        <option value="500">Gyors</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="output-panel">
+    <div class="output-heading">
+      <span>Terminál – print() kimenet</span>
+      <span class="terminal-dot"></span>
+    </div>
+    <div class="output-content" data-output>
+      <span class="output-placeholder">A program kimenete itt jelenik meg...</span>
+    </div>
+  </div>
+
+  <div class="animation-footer">
+    <span>💡</span>
+    <p>
+      Minden egyes ciklusfutáskor a változó megkapja a lista következő elemének értékét.
+    </p>
+  </div>
+</div>
+
+<style>
+  .for-animation {
+    --loop-accent: #3b82f6;
+    --loop-accent-soft: rgba(59, 130, 246, 0.1);
+    --loop-border: rgba(128, 128, 128, 0.25);
+    --loop-muted: #888;
+    margin: 2rem 0;
+    overflow: hidden;
+    border: 1px solid var(--loop-border);
+    border-radius: 16px;
+    background: var(--theme, transparent);
+    color: var(--theme-text, inherit);
+    box-shadow: 0 5px 22px rgba(0, 0, 0, 0.06);
+  }
+
+  .animation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.3rem 1.4rem;
+    border-bottom: 1px solid var(--loop-border);
+  }
+
+  .animation-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    color: var(--loop-accent);
+  }
+
+  .animation-header h3 {
+    margin: 0.3rem 0;
+    font-size: 1.3rem;
+  }
+
+  .animation-header p {
+    margin: 0;
+    color: var(--loop-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .animation-icon {
+    font-size: 2rem;
+  }
+
+  .animation-code {
+    margin: 1.2rem 1.4rem;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #172033;
+    color: #e5e7eb;
+  }
+
+  .code-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.75rem;
+    color: #aebbd0;
+  }
+
+  .code-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  .animation-code pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .code-keyword {
+    color: #c084fc;
+  }
+
+  .code-function {
+    color: #67e8f9;
+  }
+
+  .animation-main {
+    padding: 0 1.4rem 1.2rem;
+  }
+
+  .list-heading,
+  .progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .list-count {
+    color: var(--loop-muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .animated-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 0.65rem;
+  }
+
+  .animated-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-height: 78px;
+    padding: 0.65rem;
+    border: 2px solid var(--loop-border);
+    border-radius: 10px;
+    background: rgba(128,128,128,0.04);
+    transition:
+      background 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .animated-item.active {
+    border-color: var(--loop-accent);
+    background: var(--loop-accent-soft);
+    box-shadow: 0 4px 14px rgba(59,130,246,0.18);
+    transform: translateY(-7px) scale(1.04);
+  }
+
+  .item-index {
+    font-size: 0.7rem;
+    color: var(--loop-muted);
+  }
+
+  .item-value {
+    font-size: 1rem;
+    font-weight: 750;
+  }
+
+  .animated-item.active .item-value {
+    color: var(--loop-accent);
+  }
+
+  .variable-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.4rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: var(--loop-accent-soft);
+  }
+
+  .variable-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .variable-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--loop-muted);
+  }
+
+  .variable-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .variable-value {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--loop-accent);
+    border-radius: 8px;
+    background: var(--theme, transparent);
+    color: var(--loop-accent);
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .progress-area {
+    margin-top: 1.3rem;
+  }
+
+  .progress-info {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .progress-track {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(128,128,128,0.18);
+  }
+
+  .progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: 10px;
+    background: var(--loop-accent);
+    transition: width 0.35s ease;
+  }
+
+  .animation-status {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: rgba(128,128,128,0.07);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .animation-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.4rem;
+    border-top: 1px solid var(--loop-border);
+  }
+
+  .control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .control-btn {
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--loop-border);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .control-btn:hover:not(:disabled) {
+    background: var(--loop-accent-soft);
+    transform: translateY(-2px);
+  }
+
+  .control-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .play-btn {
+    background: var(--loop-accent);
+    color: white;
+    border-color: var(--loop-accent);
+    min-width: 125px;
+  }
+
+  .play-btn:hover:not(:disabled) {
+    background: #2563eb;
+    color: white;
+  }
+
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .speed-control select {
+    padding: 0.5rem;
+    border: 1px solid var(--loop-border);
+    border-radius: 7px;
+    background: transparent;
+    color: inherit;
+  }
+
+  .output-panel {
+    margin: 0 1.4rem 1.2rem;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #111827;
+    color: #d1fae5;
+  }
+
+  .output-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+
+  .terminal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  .output-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-height: 55px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 0.8rem 1rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+
+  .output-line::before {
+    content: "> ";
+    color: #6ee7b7;
+  }
+
+  .output-placeholder {
+    color: #6b7280;
+  }
+
+  .animation-footer {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.9rem 1.4rem;
+    border-top: 1px solid var(--loop-border);
+    background: rgba(128,128,128,0.04);
+  }
+
+  .animation-footer p {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--loop-muted);
+  }
+
+  @media (max-width: 550px) {
+    .animation-header,
+    .animation-main {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .animation-code {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+
+    .animation-controls {
+      padding: 1rem;
+      align-items: flex-start;
+    }
+
+    .control-buttons {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .speed-control {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .output-panel {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+
+    .animation-footer {
+      padding: 0.9rem 1rem;
+    }
+
+    .animated-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .for-animation *,
+    .for-animation *::before,
+    .for-animation *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.for-animation').forEach((root) => {
+    if (root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+
+    const items: string[] = JSON.parse(root.dataset.items || '[]');
+    const variableName = root.dataset.variable || 'elem';
+    let intervalMs = Number(root.dataset.interval) || 1200;
+    let currentIndex = -1;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    const elements = Array.from(
+      root.querySelectorAll<HTMLElement>('.animated-item')
+    );
+
+    const valueDisplay = root.querySelector<HTMLElement>('[data-current-value]');
+    const progress = root.querySelector<HTMLElement>('[data-progress]');
+    const progressText = root.querySelector<HTMLElement>('[data-progress-text]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    const output = root.querySelector<HTMLElement>('[data-output]');
+
+    const playButton = root.querySelector<HTMLButtonElement>('[data-play]');
+    const prevButton = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const nextButton = root.querySelector<HTMLButtonElement>('[data-next]');
+    const resetButton = root.querySelector<HTMLButtonElement>('[data-reset]');
+    const speedSelect = root.querySelector<HTMLSelectElement>('[data-speed]');
+
+    if (
+      !valueDisplay ||
+      !progress ||
+      !progressText ||
+      !status ||
+      !output ||
+      !playButton ||
+      !prevButton ||
+      !nextButton ||
+      !resetButton ||
+      !speedSelect ||
+      items.length === 0
+    ) return;
+
+    function stop() {
+      if (timer !== undefined) {
+        clearInterval(timer);
+        timer = undefined;
+      }
+      playButton!.textContent = '▶ Lejátszás';
+    }
+
+    function render() {
+      elements.forEach((element, index) => {
+        element.classList.toggle('active', index === currentIndex);
+      });
+
+      const completed = currentIndex === items.length;
+      const count = Math.max(0, Math.min(currentIndex + 1, items.length));
+
+      valueDisplay!.textContent =
+        currentIndex >= 0 && currentIndex < items.length
+          ? items[currentIndex]
+          : '—';
+
+      progress!.style.width = `${(count / items.length) * 100}%`;
+      progressText!.textContent = `${count} / ${items.length}`;
+
+      prevButton!.disabled = currentIndex <= 0;
+      nextButton!.disabled = completed;
+
+      if (currentIndex === -1) {
+        status!.textContent = 'Készen állsz? Indítsd el a ciklust!';
+      } else if (completed) {
+        status!.textContent = '✓ A ciklus befejeződött! Minden listaelemet feldolgoztunk.';
+      } else {
+        status!.textContent =
+          `${currentIndex + 1}. ciklusfutás: ${variableName} = "${items[currentIndex]}"`;
+      }
+
+      output!.replaceChildren();
+
+      if (count === 0) {
+        const placeholder = document.createElement('span');
+        placeholder.className = 'output-placeholder';
+        placeholder.textContent = 'A program kimenete itt jelenik meg...';
+        output!.append(placeholder);
+      } else {
+        items.slice(0, count).forEach((item) => {
+          const line = document.createElement('span');
+          line.className = 'output-line';
+          line.textContent = item;
+          output!.append(line);
+        });
+      }
+    }
+
+    function next() {
+      if (currentIndex < items.length - 1) {
+        currentIndex++;
+        render();
+      } else {
+        currentIndex = items.length;
+        stop();
+        render();
+      }
+    }
+
+    function start() {
+      if (timer !== undefined) {
+        stop();
+        return;
+      }
+
+      if (currentIndex >= items.length) {
+        currentIndex = -1;
+      }
+
+      playButton!.textContent = 'Ⅱ Szünet';
+
+      next();
+      if (currentIndex >= items.length) return;
+
+      timer = setInterval(() => {
+        if (currentIndex >= items.length - 1) {
+          currentIndex = items.length;
+          stop();
+          render();
+        } else {
+          next();
+        }
+      }, intervalMs);
+    }
+
+    playButton.addEventListener('click', start);
+
+    nextButton.addEventListener('click', () => {
+      stop();
+      if (currentIndex < items.length - 1) next();
+      else if (currentIndex === -1) next();
+    });
+
+    prevButton.addEventListener('click', () => {
+      stop();
+      currentIndex = Math.max(0, currentIndex - 1);
+      render();
+    });
+
+    resetButton.addEventListener('click', () => {
+      stop();
+      currentIndex = -1;
+      render();
+    });
+
+    speedSelect.addEventListener('change', () => {
+      intervalMs = Number(speedSelect.value) || 1200;
+
+      if (timer !== undefined) {
+        stop();
+        start();
+      }
+    });
+
+    render();
+  });
+</script>
