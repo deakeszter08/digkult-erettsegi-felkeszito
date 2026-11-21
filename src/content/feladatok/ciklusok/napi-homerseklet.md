@@ -1,7 +1,7 @@
 ---
 title: "Napi hőmérséklet-elemző"
 topic: "For ciklus"
-difficulty: "középhaladó"
+difficulty: "alapozó"
 order: 5
 ---
 
