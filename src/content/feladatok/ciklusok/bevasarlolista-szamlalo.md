@@ -22,7 +22,7 @@ Példa kimenet:
 <details>
 <summary>Megoldás megmutatása</summary>
 
-```pyhton
+```python
 arak = [450, 1200, 890, 3500, 600, 2400]
 dragabb_db = 0
 
