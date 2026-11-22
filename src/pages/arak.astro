@@ -1,4 +1,5 @@
 ---
+// Ideiglenesen elrejtett oldal (frissítés alatt)
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -7,6 +8,7 @@ import MelyiketValasszam from '../components/MelyiketValasszam.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
+
 
 
 
@@ -21,6 +23,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	</head>
 	<body>
 		<Header />
+		<main>
+		<h1>Jelenleg nem elérhető</h1>
+		<p>Ez az oldal jelenleg <strong>nem elérhető</strong> (frissítés alatt áll).</p>
+		<p>
+			Ha kapcsolatba szeretnél lépni velem, itt megteheted:
+			<a class="btn btn-primary" href=`${base}/kapcsolat`>
+        Érdeklődnék
+    </a>
+			
+		</p>
+		</main>
+
+		{/*
 		<main class="arak-main">
 			<header class="arak-header">
 				<p class="eyebrow">Felkészülési lehetőségek</p>
@@ -153,6 +168,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 			</div>
 		</main>
+	
 		<Footer />
 
 		<style>
@@ -269,5 +285,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				}
 			}
 		</style>
+	
+		*/}
 	</body>
 </html>
+

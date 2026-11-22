@@ -10,13 +10,13 @@ A programban adott egy lista a tervezett vásárlás áraival (`arak = [450, 120
 
 
 1. Használd a megadott `arak` listát (nem kell bekérni a felhasználótól)!
-2. Menj végig az elemeken `for` ciklussal, és **számold meg**, hány olyan tétel van, amelynek az ára **legalább 1000 Ft**!
+2. **Számold meg**, hány olyan tétel van, amelynek az ára **legalább 1000 Ft**!
 3. Írd ki a végeredményt egy érthető mondatban!
 
 Példa kimenet:
 
 ```text
-1000 Ft-nál legalább drágább tételek száma: 3 db
+Legalább 1000 Ft-os tételek száma: 3 db
 ```
 
 <details>

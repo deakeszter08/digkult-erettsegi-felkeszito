@@ -31,4 +31,5 @@ print("Legalább 6 betűs szavak:")
 for szo in szavak:
     if len(szo) >= 6:
         print(szo)
-        ```
+        
+```

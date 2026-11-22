@@ -74,7 +74,7 @@ for karakter in szoveg:
 ```
 
 ### 3. A `range()` függvény
-> Részletesebben érdekel mikor használjuk a range()-t? Olvasd el a [range() függvény működése](/blog/range/) cikket!
+> Részletesebben érdekel mikor használjuk a range()-t? Olvasd el a [range() függvény működése](../range) cikket!
 
 A `range()` számsorozatokat generál, ami kiváló, ha valamit N-szer szeretnénk lefuttatni:
 ```python

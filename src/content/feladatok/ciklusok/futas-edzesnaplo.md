@@ -9,9 +9,9 @@ Egy futó egy héten (7 napon) keresztül feljegyzi, hány kilométert futott az
 
 
 
-1. Kérd be mind a **7 nap** futott kilométerét (`float` típusú számként)!
+1. Kérd be mind a **7 nap** futott kilométerét (figyelj arra, hogy nem csak egész km-eket futhatott!)
 2. Írd ki, **összesen hány kilométert** futott a héten!
-3. Számold meg, **hány olyan nap volt**, amikor **legalább 5 km-t** futott (pihenő- és rövid napok kiszűrése)!
+3. Számold meg, **hány olyan nap volt**, amikor **legalább 5 km-t** futott!
 4. Írd ki a **napi átlagos** távot két tizedesjegyre kerekítve!
 
 Példa kimenet:

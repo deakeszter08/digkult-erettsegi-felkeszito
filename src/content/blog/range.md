@@ -22,7 +22,7 @@ Nemcsak `0`-tól induló sorozatokat készíthetünk: megadhatunk kezdőértéke
 
 3. **Lista indexeinek bejárására**  
 A `range(len(lista))` segítségével elérjük a lista elemeinek sorszámát (indexét) is, ami akkor hasznos, ha nemcsak az értékre, hanem annak pozíciójára is szükségünk van.
-> Ha nem tudod hogy mire jó a listákat így bejárni, akkor Olvasd el a [Listák bejárása index alapján](/blog/listak-bejarasa-index-alapjan/) cikket!
+> Ha nem tudod hogy mire jó a listákat így bejárni, akkor Olvasd el a [Listák bejárása index alapján](../listak-bejarasa-index-alapjan) cikket!
 
 ---
 
